@@ -7,5 +7,6 @@ public class User:BaseEntityWithIntId{
     public string Email { get; set; } = null!;
 
     public ICollection<Rol> Rols { get; set; } = new HashSet<Rol>();
+    public ICollection<Person> Person { get; set; } = new HashSet<Person>();
     public ICollection<RolUser> RolUsers { get; set; } = new HashSet<RolUser>();
 }
