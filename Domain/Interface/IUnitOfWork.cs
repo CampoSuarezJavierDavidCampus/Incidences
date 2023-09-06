@@ -8,7 +8,7 @@ public interface IUnitOfWork{
     IIncidenceRepository Incidences { get; }
     ILevelIncidenceRepository LevelIncidences { get; }
     IPeripheralRepository Peripherals { get; }
-    IPersonRepository Persons { get; }
+    IPersonRepository Person { get; }
     IPlaceRepository Places { get; }
     IRolRepository Rols { get; }
     IStateRepository States { get; }

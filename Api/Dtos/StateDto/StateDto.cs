@@ -1,4 +1,4 @@
 namespace Api.Dtos;
-public class State{
+public class StateDto{
     public string? Description { get; set; }    
 }

@@ -9,11 +9,11 @@ using Domain.Interface.Pagination;
 
 namespace ApiIncidencias.Controllers;
 [ApiVersion("1.0")]
-public class TypeIncidenceController : BaseApiController{
+public class AreaController : BaseApiController{
     private readonly IUnitOfWork _UnitOfWork;
     private readonly IMapper _Mapper;
 
-    public TypeIncidenceController (IUnitOfWork unitOfWork,IMapper mapper){
+    public AreaController (IUnitOfWork unitOfWork,IMapper mapper){
         _UnitOfWork = unitOfWork;
         _Mapper = mapper;
     }
@@ -23,9 +23,9 @@ public class TypeIncidenceController : BaseApiController{
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IEnumerable<TypeIncidence>> Get(){
-       var records = await _UnitOfWork.TypeIncidences.Find();
-       return _Mapper.Map<List<TypeIncidence>>(records);
+    public async Task<IEnumerable<AreaDto>> Get(){
+       var records = await _UnitOfWork.Areas.Find();
+       return _Mapper.Map<List<AreaDto>>(records);
     }
 
     [HttpGet("{id}")]
@@ -33,30 +33,30 @@ public class TypeIncidenceController : BaseApiController{
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<TypeIncidence>> Get(int id){
-       var record = await _UnitOfWork.TypeIncidences.FindByIntId(id);
+    public async Task<ActionResult<AreaDto>> Get(int id){
+       var record = await _UnitOfWork.Areas.FindByIntId(id);
        if (record == null){
            return NotFound();
        }
-       return _Mapper.Map<TypeIncidence>(record);
+       return _Mapper.Map<AreaDto>(record);
     }
 
     [HttpGet]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Pager<TypeIncidence>>> Get11([FromQuery] PageParam param){
-       IPager<TypeIncidence> pager = await _UnitOfWork.TypeIncidences.Find(param);
-       pager.Records = (IEnumerable<TypeIncidence>)_Mapper.Map<List<TypeIncidence>>(pager.Records);        
-       return CreatedAtAction("TypeIncidence",pager);
+    public async Task<ActionResult<Pager<AreaDto>>> Get11([FromQuery] PageParam param){
+       IPager<Area> pager = await _UnitOfWork.Areas.Find(param);
+       pager.Records = (IEnumerable<Area>)_Mapper.Map<List<AreaDto>>(pager.Records);        
+       return CreatedAtAction("Area",pager);
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<TypeIncidence>> Post(TypeIncidence recordDto){
-       var record = _Mapper.Map<TypeIncidence>(recordDto);
-       _UnitOfWork.TypeIncidences.Add(record);
+    public async Task<ActionResult<AreaDto>> Post(AreaDto recordDto){
+       var record = _Mapper.Map<Area>(recordDto);
+       _UnitOfWork.Areas.Add(record);
        await _UnitOfWork.SaveChanges();
        if (record == null){
            return BadRequest();
@@ -69,12 +69,12 @@ public class TypeIncidenceController : BaseApiController{
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<TypeIncidence>> Put(int id, [FromBody]TypeIncidence? recordDto){
+    public async Task<ActionResult<AreaDto>> Put(int id, [FromBody]AreaDto? recordDto){
        if(recordDto == null)
            return NotFound();
-       var record = _Mapper.Map<TypeIncidence>(recordDto);
+       var record = _Mapper.Map<Area>(recordDto);
        record.IdPk = id;
-       _UnitOfWork.TypeIncidences.Update(record);
+       _UnitOfWork.Areas.Update(record);
        await _UnitOfWork.SaveChanges();
        return recordDto;
     }
@@ -84,11 +84,11 @@ public class TypeIncidenceController : BaseApiController{
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id){
-       var record = await _UnitOfWork.TypeIncidences.FindByIntId(id);
+       var record = await _UnitOfWork.Areas.FindByIntId(id);
        if(record == null){
            return NotFound();
        }
-       _UnitOfWork.TypeIncidences.Remove(record);
+       _UnitOfWork.Areas.Remove(record);
        await _UnitOfWork.SaveChanges();
        return NoContent();
     }

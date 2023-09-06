@@ -2,8 +2,8 @@ using Api.Dtos;
 using AutoMapper;
 using Domain.Entities;
 namespace Api.Profiles;
-public class RolDtoConfiguration: Profile{
-    public RolDtoConfiguration(){
+public class MappingRolProfile: Profile{
+    public MappingRolProfile(){
         CreateMap<RolDto,Rol>()
             .ForMember(x => x.Users, opt => opt.Ignore())
             .ReverseMap();

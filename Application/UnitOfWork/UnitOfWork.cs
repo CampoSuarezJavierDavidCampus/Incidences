@@ -31,7 +31,7 @@ public class UnitOfWork : IUnitOfWork,IDisposable{
     public IIncidenceRepository Incidences => _Incidence ??= new IncidenceRepository(_Context);
     public ILevelIncidenceRepository LevelIncidences => _LevelIncidence ??= new LevelIncidenceRepository(_Context);
     public IPeripheralRepository Peripherals => _Peripheral ??= new PeripheralRepository(_Context);
-    public IPersonRepository Persons => _Person ??= new PersonRepository(_Context);
+    public IPersonRepository Person => _Person ??= new PersonRepository(_Context);
     public IPlaceRepository Places => _Place ??= new PlaceRepository(_Context);
     public IRolRepository Rols =>  _Rol ??= new RolRepository(_Context);
     public IStateRepository States => _State ??= new StateRepository(_Context);

@@ -1,5 +1,5 @@
 namespace Api.Dtos;
-public class Place{
+public class PlaceDto{
 
     public string? Name { get; set; }    
 

@@ -4,6 +4,6 @@ using Domain.Interface;
 using Persistence;
 
 namespace Application.Repositories;
-public class TypeIncidenceRepository : GenericRepositoryWithIntId<Incidence>, ITypeIncidenceRepository{
+public class TypeIncidenceRepository : GenericRepositoryWithIntId<TypeIncidence>, ITypeIncidenceRepository{
     public TypeIncidenceRepository(ApiContext context) : base(context){}
 }

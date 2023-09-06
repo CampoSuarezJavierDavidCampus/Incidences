@@ -9,11 +9,11 @@ using Domain.Interface.Pagination;
 
 namespace ApiIncidencias.Controllers;
 [ApiVersion("1.0")]
-public class CategoryContactController : BaseApiController{
+public class DetailIncidenceController : BaseApiController{
     private readonly IUnitOfWork _UnitOfWork;
     private readonly IMapper _Mapper;
 
-    public CategoryContactController (IUnitOfWork unitOfWork,IMapper mapper){
+    public DetailIncidenceController (IUnitOfWork unitOfWork,IMapper mapper){
         _UnitOfWork = unitOfWork;
         _Mapper = mapper;
     }
@@ -23,9 +23,9 @@ public class CategoryContactController : BaseApiController{
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<IEnumerable<CategoryContactDto>> Get(){
-       var records = await _UnitOfWork.CategoryContacts.Find();
-       return _Mapper.Map<List<CategoryContactDto>>(records);
+    public async Task<IEnumerable<DetailIncidence>> Get(){
+       var records = await _UnitOfWork.DetailIncidences.Find();
+       return _Mapper.Map<List<DetailIncidence>>(records);
     }
 
     [HttpGet("{id}")]
@@ -33,30 +33,30 @@ public class CategoryContactController : BaseApiController{
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CategoryContactDto>> Get(int id){
-       var record = await _UnitOfWork.CategoryContacts.FindByIntId(id);
+    public async Task<ActionResult<DetailIncidence>> Get(int id){
+       var record = await _UnitOfWork.DetailIncidences.FindByIntId(id);
        if (record == null){
            return NotFound();
        }
-       return _Mapper.Map<CategoryContactDto>(record);
+       return _Mapper.Map<DetailIncidence>(record);
     }
 
     [HttpGet]
     [MapToApiVersion("1.1")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<Pager<CategoryContactDto>>> Get11([FromQuery] PageParam param){
-       IPager<CategoryContact> pager = await _UnitOfWork.CategoryContacts.Find(param);
-       pager.Records = (IEnumerable<CategoryContact>)_Mapper.Map<List<CategoryContactDto>>(pager.Records);        
-       return CreatedAtAction("CategoryContact",pager);
+    public async Task<ActionResult<Pager<DetailIncidence>>> Get11([FromQuery] PageParam param){
+       IPager<DetailIncidence> pager = await _UnitOfWork.DetailIncidences.Find(param);
+       pager.Records = (IEnumerable<DetailIncidence>)_Mapper.Map<List<DetailIncidence>>(pager.Records);        
+       return CreatedAtAction("DetailIncidence",pager);
     }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CategoryContactDto>> Post(CategoryContactDto recordDto){
-       var record = _Mapper.Map<CategoryContact>(recordDto);
-       _UnitOfWork.CategoryContacts.Add(record);
+    public async Task<ActionResult<DetailIncidence>> Post(DetailIncidence recordDto){
+       var record = _Mapper.Map<DetailIncidence>(recordDto);
+       _UnitOfWork.DetailIncidences.Add(record);
        await _UnitOfWork.SaveChanges();
        if (record == null){
            return BadRequest();
@@ -64,16 +64,17 @@ public class CategoryContactController : BaseApiController{
        return CreatedAtAction(nameof(Post),new {id= record.IdPk, recordDto});
     }
 
-    [HttpPut]
+    [HttpPut("{id}")]
     [MapToApiVersion("1.0")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public async Task<ActionResult<CategoryContactDto>> Put([FromBody]CategoryContactDto? recordDto){
+    public async Task<ActionResult<DetailIncidence>> Put(int id, [FromBody]DetailIncidence? recordDto){
        if(recordDto == null)
            return NotFound();
-       var record = _Mapper.Map<CategoryContact>(recordDto);
-       _UnitOfWork.CategoryContacts.Update(record);
+       var record = _Mapper.Map<DetailIncidence>(recordDto);
+       record.IdPk = id;
+       _UnitOfWork.DetailIncidences.Update(record);
        await _UnitOfWork.SaveChanges();
        return recordDto;
     }
@@ -83,11 +84,11 @@ public class CategoryContactController : BaseApiController{
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(int id){
-       var record = await _UnitOfWork.CategoryContacts.FindByIntId(id);
+       var record = await _UnitOfWork.DetailIncidences.FindByIntId(id);
        if(record == null){
            return NotFound();
        }
-       _UnitOfWork.CategoryContacts.Remove(record);
+       _UnitOfWork.DetailIncidences.Remove(record);
        await _UnitOfWork.SaveChanges();
        return NoContent();
     }

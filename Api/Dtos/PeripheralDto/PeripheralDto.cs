@@ -1,4 +1,4 @@
 namespace Api.Dtos;
-public class Peripheral{
+public class PeripheralDto{
     public string? Name { get; set; }
 }
