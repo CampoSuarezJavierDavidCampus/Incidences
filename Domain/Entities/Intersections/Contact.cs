@@ -3,7 +3,7 @@ namespace Domain.Entities;
 public class Contact{
     public string? Description { get; set; }
 
-    public int IdPersonPk { get; set; }
+    public string IdPersonPk { get; set; } = null!;
     public Person? Person { get; set; }
 
     public int IdTypeContactPk { get; set; }

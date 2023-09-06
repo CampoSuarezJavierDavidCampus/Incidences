@@ -9,10 +9,7 @@ public class Person: BaseEntityWithStrinId{
 
     public int IdDocumentTypeFk { get; set; }
     public DocumentType? DocumentType { get; set; }
-
-    public int IdRolFk { get; set; }
-    public Rol? Rol { get; set; }
-
+    
     public int IdUserFk { get; set; }
     public User? User { get; set; }
 

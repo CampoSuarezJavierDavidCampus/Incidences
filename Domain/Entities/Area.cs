@@ -4,8 +4,7 @@ using Domain.Entities.Generics;
 namespace Domain.Entities;
 
 public class Area:BaseEntityWithIntId{    
-    public string? Name { get; set; }
-    public string? Description_Incidence { get; set; }    
+    public string? Name { get; set; }    
 
     public ICollection<Place>? Places { get; set; }
     public ICollection<Incidence>? Incidences { get; set; }
