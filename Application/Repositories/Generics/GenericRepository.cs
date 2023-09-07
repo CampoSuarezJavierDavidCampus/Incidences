@@ -20,11 +20,11 @@ public abstract class GenericRepository<T>: IGenericRepository<T>  where T : cla
         return records;      
     }
     public virtual async Task<IPager<T>> Find(IPageParam param, Expression<Func<T, bool>>? expression = null){
-        if (GetRecords(expression) is not IQueryable<T> records)
-        {
-            return new Pager<T>(Enumerable.Empty<T>(), param);
+        if (expression is not null){
+            return await  _Entity.Where(expression).GetPaged(param);
         }
-        return await records.GetPaged(param) ;
+        return await _Entity.GetPaged(param);
+        
     }
     
     public virtual async Task<T?> FindFirst(Expression<Func<T, bool>> expression) {
@@ -40,11 +40,11 @@ public abstract class GenericRepository<T>: IGenericRepository<T>  where T : cla
     public virtual void Remove(T entity) => _Entity.Remove(entity);
     public virtual void RemoveRange(ICollection<T> entities) => _Entity.RemoveRange(entities);
 
-    protected virtual async Task<IEnumerable<T>> GetRecords(Expression<Func<T, bool>>? conditions = null){
+    protected virtual async Task<IEnumerable<T>> GetRecords(Expression<Func<T, bool>>? conditions = null){        
         if (conditions is not null){
-            return await _Entity.Where(conditions).ToListAsync();
+            return  await _Entity.Where(conditions).ToListAsync();
         }
-        return await _Entity.ToListAsync();
+        return  await _Entity.ToListAsync();        
     }
 
 }

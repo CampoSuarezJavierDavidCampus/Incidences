@@ -30,9 +30,9 @@ public class UserServices : IUserServices
 
 
     public async Task<string> AddRolAsync(AddRolDto model){
-        User? user = await _UnitOfWork.Users.FindUserByUsername(model.Username);
+        User? user = await _UnitOfWork.Users.FindUserByUsername(model.Username);        
         if (user == null){
-            return $"No existe algún usuario registrado con la cuenta {model.Username}.";
+            return $"No existe algún usuario registrado con la cuenta {model.Username}.";            
         }else if(!ValidatePassword(user,model.Password)){
             return $"Credenciales incorrectas para el usuario {model.Username}.";
         }
@@ -74,20 +74,25 @@ public class UserServices : IUserServices
     }
 
     public async Task<string> RegisterAsync(SingUpDto model)
-    {
-        var user = CreateUser(model);
+    {        
 
-        var existingUser = _UnitOfWork.Users.FindUserByUsername(model.Username);
-        if (existingUser == null){
+        var existingUser =await _UnitOfWork.Users.FindUserByUsername(model.Username);        
+        if (existingUser != null){
             return $"El usuario {model.Username} ya se encuentra registrado.";
         }
         
-        var defaultRol =  (await _UnitOfWork.Rols.FindByRol( Authorization.Default_role ))!;
+        var user = CreateUser(model);        
         
-        try{
-            user.Rols?.Add(defaultRol);
-            _UnitOfWork.Users.Add(user);
+        try{            
+            _UnitOfWork.Users.Add(user);            
             await _UnitOfWork.SaveChanges();
+            await AddRolAsync(
+                new AddRolDto(){
+                    Username = user.Usename,
+                    Password = model.Password,
+                    Rol = Rols.Employee.ToString()
+                }
+            );
             return $"El usuario  {model.Username} ha sido registrado exitosamente";
         }catch(Exception ex){
             return $"Error: {ex.Message}";

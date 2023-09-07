@@ -1,6 +1,7 @@
 using System.Reflection;
 using System.Text;
 using Api.Extensions;
+using AspNetCoreRateLimit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -47,7 +48,7 @@ if (app.Environment.IsDevelopment())
 app.UseCors("CorsPolicy");
 
 app.UseHttpsRedirection();
-app.UseRateLimiter();
+app.UseIpRateLimiting();
 
 app.UseAuthentication();
 app.UseAuthorization();

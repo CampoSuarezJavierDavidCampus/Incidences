@@ -12,7 +12,7 @@ using Persistence;
 namespace Persistence.Data.Migrations
 {
     [DbContext(typeof(ApiContext))]
-    [Migration("20230906131600_InitialCreate")]
+    [Migration("20230907140259_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -316,7 +316,7 @@ namespace Persistence.Data.Migrations
                         .HasColumnName("id_DocumentType_Fk");
 
                     b.Property<int>("IdUserFk")
-                        .HasColumnType("INT")
+                        .HasColumnType("int")
                         .HasColumnName("id_User_Fk");
 
                     b.Property<string>("Lastname")
@@ -451,7 +451,7 @@ namespace Persistence.Data.Migrations
                 {
                     b.Property<int>("IdPk")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INT")
+                        .HasColumnType("int")
                         .HasColumnName("idPk")
                         .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 

@@ -12,11 +12,11 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         
         builder.ToTable("user");        
         builder.HasKey(X => X.IdPk);
+
         builder.Property(x => x.IdPk)
             .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn)            
             .IsRequired()
-            .HasColumnName("idPk")
-            .HasColumnType("INT");
+            .HasColumnName("idPk");
 
 
         builder.Property(x => x.Usename)

@@ -145,7 +145,7 @@ namespace Persistence.Data.Migrations
                 name: "user",
                 columns: table => new
                 {
-                    idPk = table.Column<int>(type: "INT", nullable: false)
+                    idPk = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     username = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -195,7 +195,7 @@ namespace Persistence.Data.Migrations
                     address_Person = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     id_DocumentType_Fk = table.Column<int>(type: "int", nullable: false),
-                    id_User_Fk = table.Column<int>(type: "INT", nullable: false)
+                    id_User_Fk = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -46,8 +46,8 @@ public static class ServicesExtensions{
             opt.GeneralRules = new(){
                 new(){
                    Endpoint = "*",
-                   Period = "10s",
-                   Limit = 2
+                   Period = "15s",
+                   Limit = 7
                 }
             };
         });
