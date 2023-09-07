@@ -40,11 +40,11 @@ public class UserServices : IUserServices
         if (existingRol == null){
              return $"Rol {model.Rol} agregado a la cuenta {model.Username} de forma exitosa.";
         }
-        
         var userHasRol = user.Rols?.Any(x => x.IdPk == existingRol.IdPk);
         if (userHasRol == false)
-        {
-            user.Rols?.Add(existingRol);
+        {            
+            user.Rols?.Add(existingRol);            ;
+
             _UnitOfWork.Users.Update(user);
             await _UnitOfWork.SaveChanges();
         }
@@ -84,15 +84,11 @@ public class UserServices : IUserServices
         var user = CreateUser(model);        
         
         try{            
-            _UnitOfWork.Users.Add(user);            
-            await _UnitOfWork.SaveChanges();
-            await AddRolAsync(
-                new AddRolDto(){
-                    Username = user.Usename,
-                    Password = model.Password,
-                    Rol = Rols.Employee.ToString()
-                }
-            );
+            user.Rols.Add(new Rol(){
+                Description = Rols.Employee.ToString()
+            });            
+            _UnitOfWork.Users.Add(user);                        
+            await _UnitOfWork.SaveChanges();            
             return $"El usuario  {model.Username} ha sido registrado exitosamente";
         }catch(Exception ex){
             return $"Error: {ex.Message}";
@@ -151,6 +147,9 @@ public class UserServices : IUserServices
     }    
 
     private bool ValidatePassword(User user, string password){
+        Console.WriteLine("!!!!!!!!!!!!!!!!!!!!!!!!!!");
         return _PasswordHasher.VerifyHashedPassword(user, user.Password, password) == PasswordVerificationResult.Success;
+        
+
     }
 }
